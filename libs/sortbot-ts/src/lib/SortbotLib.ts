@@ -37,6 +37,8 @@ export function sort(width: number, height: number, length: number, mass: number
  * @returns String matching 'standard', 'special', or 'rejected'
  */
 export function sortProps(packageProps: PackageProps): string {
+  validatePackageProps(packageProps);
+
   const isHeavy = checkHeavy(packageProps.mass);
   const isBulky = checkBulky(packageProps.width, packageProps.height, packageProps.length);
 
@@ -54,13 +56,28 @@ export function sortProps(packageProps: PackageProps): string {
   }
 }
 
-const checkHeavy = (mass: number): boolean => {
+const validatePackageProps = (packageProps: PackageProps): boolean => {
+  if ((packageProps.width <= 0) ||
+      (packageProps.height <= 0) ||
+      (packageProps.length <= 0))
+  {
+    throw new Error('Invalid package dimensions!');
+  }
+  if ((packageProps.mass <= 0))
+  {
+    throw new Error('Invalid package mass!');
+  }
+
+  return true;
+}
+
+export const checkHeavy = (mass: number): boolean => {
   return mass >= 20.0;
 }
 
-const checkBulky = (width: number, height: number, length: number): boolean => {
+export const checkBulky = (width: number, height: number, length: number): boolean => {
   // Volume >= 1,000,000 cm^3
-  const volume = width * height * length;
+  const volume = getVolume(width, height, length);
   const isTooBig = volume >= 1000000.0;
 
   // Check all dimensions for length >= 150 cm
@@ -69,10 +86,19 @@ const checkBulky = (width: number, height: number, length: number): boolean => {
   return (isTooBig || isTooLong);
 }
 
-/**
- * longestDimension: Given a package's width, height, and length,
- *   return the value of the longest dimension.
- */
-const longestDimension = (width: number, height: number, length: number): number => {
+export const getVolumeFromProps = (props: PackageProps): number => {
+  return getVolume(props.width, props.height, props.length);
+
+}
+
+export const getVolume = (width: number, height: number, length: number): number => {
+  return width * height * length;
+}
+
+export const longestDimensionFromProps = (props: PackageProps): number => {
+  return longestDimension(props.width, props.height, props.length);
+}
+
+export const longestDimension = (width: number, height: number, length: number): number => {
   return Math.max(width, length, height);
 }
