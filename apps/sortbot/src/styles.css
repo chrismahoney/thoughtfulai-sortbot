@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: 'Helvetica', 'Roboto', 'Arial', sans-serif;
+}
+
+li {
+  list-style-type: none;
+  padding: 10px;
+}
+
+label {
+  width: 150px;
+}
+
+input {
+  margin-left: 10px;
+}
+
+.alertText {
+  color: red;
+  font-weight: bold;
+}
+
+.stacks {
+  display: inline-block;
+}
+
+.derivedInfo {
+  display: inline-block;
+}
+
+.stackCell {
+  display: block;
+  padding: 10px;
+  width: 100px;
+  text-align: center;
+  opacity: 0.5;
+}
+
+.stackCellHighlight {
+  display: block;
+  padding: 10px;
+  width: 100px;
+  text-align: center;
+  opacity: 1;
+}
+
+#standard {
+  background-color: green;
+}
+
+#special {
+  background-color: yellow;
+}
+
+#rejected {
+  background-color: red;
+}
